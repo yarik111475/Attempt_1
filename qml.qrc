@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>CameraButton.qml</file>
+        <file>CameraListButton.qml</file>
+        <file>CameraListPopup.qml</file>
+        <file>HomeForm.qml</file>
+        <file>Page1_GUI.qml</file>
+        <file>Page2_GUI.qml</file>
+        <file>PhotoCaptureControls.qml</file>
+        <file>Popup.qml</file>
+        <file>VideoCaptureControls.qml</file>
+        <file>ZoomControl.qml</file>
+        <file>qtquickcontrols2.conf</file>
+    </qresource>
+</RCC>
