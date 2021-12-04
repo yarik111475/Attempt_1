@@ -2,7 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QVideoFilterRunnable>
 #include <QQmlContext>
-#include "imagehandler.h"
+#include "cameraitem.h"
+#include "camerahandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,14 +14,15 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    qmlRegisterType<CameraItem>("com.examples.camera",1,0,"CameraItem");
 
     //************************
     //create QQmlContext object,
-    //create ImageHandler object
-    //and set property named 'imageHandler' into QQmlContext
+    //create CameraHandler object
+    //and set property named 'cameraHandler' into QQmlContext
     QQmlContext* pQmlContext=engine.rootContext();
-    ImageHandler* pImageHandler=new ImageHandler;
-    pQmlContext->setContextProperty("imageHandler", pImageHandler);
+    CameraHandler* pCameHandler=new CameraHandler;
+    pQmlContext->setContextProperty("cameraHandler", pCameHandler);
     //*************************
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

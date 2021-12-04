@@ -44,7 +44,6 @@ ApplicationWindow {
                 width: parent.width
                 onClicked: {
                     stackView.push("Page1_GUI.qml")
-                    stackView.
                     drawer.close()
                 }
             }

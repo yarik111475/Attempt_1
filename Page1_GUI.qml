@@ -7,6 +7,7 @@ import QtQuick.Controls 2.5
 import QtQuick.Dialogs 1.2
 import QtMultimedia 5.14
 import Qt.labs.platform 1.1
+import com.examples.camera 1.0
 
 Page
 {
@@ -23,8 +24,8 @@ Page
         y: 757
         text: qsTr("Stop")
         onClicked: {
-            camera.stop();
-            viewfinder.visible=false;
+            cameraHandler.slotStopCapture();
+            cameraItem.slotReset();
         }
     }
 
@@ -35,8 +36,7 @@ Page
         y: 757
         text: qsTr("Start")
         onClicked: {
-            camera.start();
-            viewfinder.visible=true;
+            cameraHandler.slotStartCapture();
         }
     }
 
@@ -50,42 +50,22 @@ Page
 
         color: "black"
         state: "PhotoCapture"
-
-        Camera {
-            id: camera
-            captureMode: Camera.CaptureStillImage
-            videoRecorder {
-                 resolution: "1024x768"
-                 frameRate: 30
-            }
-            imageCapture.onImageCaptured: {
-                imageHandler.slotSetImage(preview);
-            }
-            Component.onCompleted: {
-                camera.stop();
-            }
-        }
-        Timer{
-            id: captureTimer;
-            interval: 100;
-            repeat: true;
-            running: (camera.cameraStatus===Camera.ActiveStatus) ? true : false;
-            onTriggered: {
-                if(camera.imageCapture.ready){
-                    camera.imageCapture.capture();
-                }
-
-            }
+        Component.onCompleted: {
+            cameraItem.slotReset();
         }
 
-        VideoOutput {
-            id: viewfinder
+        CameraItem{
+            id: cameraItem;
             x: 0
             y: 0
             width: parent.width - stillControls.buttonsPanelWidth
             height: parent.height
-            source: camera
-            autoOrientation: true
+        }
+        Connections{
+            target: cameraHandler;
+            onSignalImageCaptured:{
+                cameraItem.slotSetImage(preview);
+            }
         }
 
         PhotoCaptureControls {
